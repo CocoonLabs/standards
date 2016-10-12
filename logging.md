@@ -1,18 +1,18 @@
 ## Logging
 
-Logging standards and so on..
+This document describes how we write program logs.
 
-
+Our standards were inspired by [https:\/\/12factor.net\/logs](https://12factor.net/logs)
 
 ### Format
 
-Application logs are expected to be serialized in JSON
+Format is in modified ELF.
+
+Application logs data are expected to be serialized in JSON.
 
 ```
-blah blah
+2010-05-02 15:42:15 '{"host": "0.0.0.0", "port": "3000"}'
 ```
-
-
 
 ### Level
 
@@ -22,14 +22,12 @@ In a non-production environment, one can turn on DEBUG \(10\) to view more infor
 
 | Level | Description |
 | --- | --- |
-| DEBUG \(10\) |  |
-| INFO \(20\) |  |
-| WARNING \(30\) |  |
-| ERROR \(40\) |  |
-| CRITICAL \(50\) |  |
-| FATAL \(50\) |  |
-
-
+| DEBUG \(10\) | System events. Verbose internal calls. |
+| INFO \(20\) | High-level events. Verbose internal calls. |
+| WARNING \(30\) | Non-error exceptions log \(page 404, failed transaction, etc\). |
+| ERROR \(40\) | Unhandled exceptions. No system impact. |
+| CRITICAL \(50\) | Unhandled exception. System will shutdown soon. |
+| FATAL \(50\) | Unhandled exception. System shutdown. |
 
 ### Streams
 
@@ -37,8 +35,6 @@ We are going to use the distinction of **stdout** and **stderr**.
 
 | Stream | Purpose |
 | --- | --- |
-| stdout |  |
-| stderr |  |
-
-
+| stdout | Primary program output \(script result, etc\) |
+| stderr | Secondary program output \(logs, etc\) |
 
